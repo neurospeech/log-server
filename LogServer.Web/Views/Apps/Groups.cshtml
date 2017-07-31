@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Log groups";
+}
+
+<div 
+     class="dock-left log-group-list"
+     atom-type="AtomListBox"
+     atom-allow-select-first="true"
+     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups' )]"
+     atom-value-path="LogGroupID"
+     atom-value="$[appScope.gid]">
+     <div 
+          atom-template="itemTemplate">
+         <h3 atom-text="{$data.Title}"></h3>
+         <span 
+               class="time"
+               atom-text="{AtomDate.smartDate($data.LastUpdate)}"></span>
+         <span 
+               class="status"
+               atom-class="{'status-' + ($data.Status || '').toLowerCase()}"
+               atom-text="{$data.Status}"></span>
+         <span 
+               class="total"
+               atom-text="{'(' + $data.Total + ')'}"></span>
+         <span 
+               class="total-users"
+               atom-text="{$data.TotalUsers}"></span>         
+     </div>
+</div>
+
+<section 
+         class="log-item-list"
+         atom-type="AtomDockPanel">
+
+    <header 
+            atom-type="AtomListBox"
+            id="logList"
+            atom-allow-select-first="true"
+            atom-items="[AtomPromise.json('/api/logs/' + $appScope.gid )]"
+            atom-value-path="LogItemID"
+            atom-value="$[appScope.lid]">
+        <table atom-presenter="itemsPresenter">
+            <thead>
+                <tr>
+                    <th>Log</th>
+                    <th>User</th>
+                    <th>Time</th>
+                    <th>IP Address</th>
+                </tr>
+            </thead>
+            <tbody atom-presenter="itemsPresenter">
+                <tr atom-template="itemTemplate">
+                    <td atom-text="{$data.LogType}"></td>
+                    <td atom-text="{$data.User}"></td>
+                    <td atom-text="{AtomDate.smartDate($data.Time)}"></td>
+                    <td atom-text="{$data.UserIPAddress}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+
+    <section 
+             class="log-item-detail"
+             atom-type="AtomControl"
+             atom-data="[$appScope.logList.selectedItem]">
+        <h5 atom-text="[$data.Title]"></h5>
+        <h6 atom-text="[$data.Url]"></h6>
+        <h6 atom-text="[$data.Method]"></h6>
+        <h6 atom-text="[$data.Device]"></h6>
+        <h6 atom-text="[$data.Application]"></h6>
+        <h6 atom-text="[$data.Platform]"></h6>
+        <h6 atom-text="[$data.PlatformVersion]"></h6>
+        <h6 atom-text="[$data.UserAgent]"></h6>
+        <textarea 
+                  readonly="readonly"
+                  atom-value="[$data.Detail]" 
+                  style="width:95%;min-height:300px"></textarea>
+    </section>
+
+
+
+
+</section>

@@ -1,0 +1,16 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ExceptionServer.Web/.vs
+/ExceptionServer.Web/ExceptionServer.Web/bin
+/ExceptionServer.Web/ExceptionServer.Web/obj/Debug
+/ExceptionServer.Web/packages
+/ExceptionServer.Web/UnitTests/obj/Debug
+/ExceptionServer.Web/CoreDI/bin/Debug
+/ExceptionServer.Web/CoreDI/obj/Debug
+/ExceptionServer.Web/UnitTests/bin/Debug
+/.vs
+/packages
+LogServer.Web/bin/
+LogServer.Web/obj/

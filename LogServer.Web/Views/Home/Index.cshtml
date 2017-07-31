@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<section style="overflow:auto">
+    <table
+           atom-type="AtomItemsControl"
+           atom-items="[AtomPromise.json('/api/apps')]">
+
+        <thead>
+            <tr>
+                <th>App</th>
+                <th>Platform</th>
+                <th>Total</th>
+                <th>Last Update</th>
+            </tr>
+        </thead>
+
+        <tbody atom-presenter="itemsPresenter">
+            <tr atom-template="itemTemplate">
+                <td>
+                    <a 
+                       atom-href="{Atom.url('/apps/groups/',null,{id: $data.AppID})}"
+                       atom-text="{$data.Name}"></a>
+                </td>
+                <td atom-text="{$data.Platform}"></td>
+                <td atom-text="{$data.Total}"></td>
+                <td atom-text="{AtomDate.smartDate($data.LastUpdate)}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>

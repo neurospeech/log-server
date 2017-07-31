@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<form class="dock-fill"
+      atom-type="AtomForm"
+      atom-post-url="/api/auth"
+      atom-method="PUT"
+      atom-data="{ { 
+        Username: '', 
+        Password: '', 
+        RememberMe: false 
+      } }"
+      atom-next="@Model">
+
+    <div atom-type="AtomFormLayout">
+
+        <input
+               atom-label="Username:"
+               atom-required="true"
+               atom-value="$[data.Username]"
+               type="text"/>
+
+
+        <input atom-label="Password:"
+               atom-required="true"
+               atom-value="$[data.Password]"
+               type="password" />
+
+        <input
+               type="checkbox"
+               atom-value="$[data.RememberMe]"
+               />
+
+        <button type="submit">Login</button>
+
+    </div>
+
+</form>
+

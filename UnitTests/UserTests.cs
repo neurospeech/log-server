@@ -1,20 +1,28 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LogServer.Web.Areas.Api.Controllers;
+﻿using LogServer.Web.Areas.Api.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace UnitTests
 {
-    [TestClass]
-    public class UnitTest: BaseTest
+    public class UserTests : BaseTest
     {
-        [TestMethod]
-        public async Task CreateApp()
+        public UserTests(ITestOutputHelper writer) : base(writer)
         {
+        }
+
+
+        [Fact(DisplayName = "User - CreateApp")]
+        public async Task CreateApp() {
 
             AppController appController = new AppController();
 
-            var a = await appController.Put(new LogServer.Web.Models.App {
+            var a = await appController.Put(new LogServer.Web.Models.App
+            {
                 Name = "Sample",
                 Platform = "iOS"
             });
@@ -23,9 +31,10 @@ namespace UnitTests
 
             //Assert.AreNotEqual(appController.DIScope, logController.DIScope);
 
-            await logController.Put(a.AppID, a.AppPushKey, new LogInfo {
+            await logController.Put(a.AppID, a.AppPushKey, new LogInfo
+            {
                 Application = "Sample",
-                
+
                 Title = "Title",
                 Detail = "Description",
                 Device = "Log",
@@ -44,7 +53,7 @@ namespace UnitTests
 
             await logController.Clean();
 
-            Assert.AreEqual(a.AppID, 1);
+            Assert.Equal(a.AppID, 1);
 
         }
     }

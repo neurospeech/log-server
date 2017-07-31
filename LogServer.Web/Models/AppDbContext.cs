@@ -16,7 +16,7 @@ namespace LogServer.Web.Models
     /// <summary>
     /// 
     /// </summary>
-    [DIGlobal(typeof(AppDbContext))]
+    [DIScoped(typeof(AppDbContext))]
     public class AppDbContext: DbContext
     {
 
@@ -31,8 +31,8 @@ namespace LogServer.Web.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="conn"></param>
-        public AppDbContext(DbConnection conn) : base(conn, true)
+        /// <param name="nameOrConnectionString"></param>
+        public AppDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
             Configuration.ValidateOnSaveEnabled = true;
         }

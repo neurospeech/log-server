@@ -14,3 +14,5 @@
 /packages
 LogServer.Web/bin/
 LogServer.Web/obj/
+UnitTests/obj/
+UnitTests/bin/

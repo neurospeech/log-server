@@ -220,6 +220,7 @@
     <Compile Include="Models\LogItem.cs" />
     <Compile Include="Models\WebUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DateTimeService.cs" />
     <Compile Include="Services\IAuthService.cs" />
     <Compile Include="Services\IHashService.cs" />
   </ItemGroup>

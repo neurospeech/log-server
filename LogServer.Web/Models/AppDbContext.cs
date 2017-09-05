@@ -150,7 +150,7 @@ namespace LogServer.Web.Models
             public AppDbContextConfiguration()
             {
                 AutomaticMigrationsEnabled = true;
-                AutomaticMigrationDataLossAllowed = true;
+                //AutomaticMigrationDataLossAllowed = true;
 
             }
 

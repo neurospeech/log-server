@@ -24,7 +24,12 @@ namespace LogServer.Web.Controllers
                 redirectUrl = "/";
             }
             return View((object) redirectUrl);
-        } 
+        }
+        public ActionResult Users()
+        {
+
+            return View();
+        }
 
     }
 }

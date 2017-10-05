@@ -1,4 +1,5 @@
 ﻿using LogServer.Web.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,6 +24,8 @@ namespace LogServer.Web.Areas.Api.Controllers
         /// <param name="id">App Id</param>
         /// <param name="start"></param>
         /// <param name="size"></param>
+        /// <param name="user"></param>
+        /// <param name="date"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
         [Route("api/apps/{id}/groups")]
@@ -30,6 +33,8 @@ namespace LogServer.Web.Areas.Api.Controllers
             long id,
             int start = 0,
             int size = 50,
+            string user=null,
+            string date=null,
             string orderBy = "LastTime desc"
             )
         {
@@ -40,11 +45,22 @@ namespace LogServer.Web.Areas.Api.Controllers
                     q = q.OrderByDescending(x => x.LastTime);
                     break;
             }
+            
+            if (!string.IsNullOrWhiteSpace(user))
+            {
+                q = q.Where( x=>x.LogItems.Any( li => li.User.Contains(user) ) );
+            }
 
+            if (date!=null)
+            {
+                DateTime parsedDate = Convert.ToDateTime(date);
+                q = q.Where(x => x.LogItems.Any(li => (li.Time == parsedDate)));
+
+            }
             if (start > 0) {
                 q = q.Skip(start);
             }
-
+            
             q = q.Take(size);
 
             return await q.ToListAsync();

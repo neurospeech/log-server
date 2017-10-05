@@ -138,6 +138,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\api-extensions.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\AppVersion.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\ConfigItem.cs" />
+    <Compile Include="Models\JsonDate.cs" />
     <Compile Include="Models\LogGroup.cs" />
     <Compile Include="Models\LogItem.cs" />
     <Compile Include="Models\WebUser.cs" />
@@ -249,6 +251,7 @@
     <Content Include="Scripts\web-atoms\style\atoms.css.map" />
     <Content Include="Scripts\web-atoms\plugins\upload\atom-uploader.css.map" />
     <Content Include="Scripts\web-atoms\plugins\entity-framework\entity.css.map" />
+    <Content Include="Views\User\Users.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

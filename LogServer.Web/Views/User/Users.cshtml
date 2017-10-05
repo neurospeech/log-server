@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Users";
+}
+<style>
+    table {
+        overflow:auto;
+        top: 60px;
+    }
+    table thead tr th 
+    {
+        background-color: rgba(185,184,184,.93);
+        padding: 10px;
+        text-align: start;
+    }
+    table tbody tr {
+        background-color: rgba(185, 184, 184, 0.33);
+        text-align: start;
+    }
+    table tbody tr td {
+        padding: 10px;
+    }
+
+    
+</style>
+
+
+<div atom-type="AtomApplication"
+     atom-dock="Fill"
+     style="width:100%;height:764px;">
+    <div atom-type="AtomDockPanel"
+         atom-dock="Left"
+         style="width:500px;border-style:none;">
+
+        <div atom-dock="Fill"
+             atom-type="AtomListBox"
+             atom-name="projectList"
+             atom-value-path="ProjectID"
+             atom-allow-select-first="{true}"
+             atom-auto-select-on-click="{ true }"
+             atom-items="[AtomPromise.json('/api/users')]"
+             atom-method="GET"
+             style="top:3px; border-right:2px solid #eee;">
+            <table style="width:99% !important;">
+
+                <thead>
+                    <tr class="headerRow">
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Admin</th>
+                    </tr>
+                </thead>
+
+                <tbody atom-presenter="itemsPresenter">
+                    <tr atom-template="itemTemplate" style="height:30px;">
+                        <td>
+                            <span atom-text="[$data.FirstName]"></span>
+                            <span atom-text="[$data.LastName]"></span> <br />
+                            <span atom-text="[$data.EmailAddress]" style="text-decoration: underline;color: blue;"></span>
+                        </td>
+                        <td atom-text="{$data.Username}"></td>
+
+                        <td atom-text="{$data.IsAdmin? 'Yes' : 'No'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    
+

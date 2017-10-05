@@ -9,20 +9,30 @@
     <script src="@CachedUrlHelper.Cached("/Scripts/web-atoms/web-atoms.js")"></script>
     <script src="@CachedUrlHelper.Cached("/Scripts/api-extensions.js")"></script>
     <link href="@CachedUrlHelper.Cached("/Scripts/web-atoms/style/atoms.min.css")" rel="stylesheet" />
-
-    @RenderSection("HtmlHead",false)
+    <style>
+        ul>li>a{
+            color:white;
+        }
+    </style>
+    @RenderSection("Header", false)
 
     <script>
         var links = [
             {
                 label: "Home", value: "/",
+            },
+            //{
+            //    label: "Apps", value: "/apps",
+            //}, {
+            //    label: "Logs", value: "/logs",
+            //},
+            {
+                label: "Users", value: "/user/users"
             }, {
-                label: "Apps", value: "/apps",
-            }, {
-                label: "Logs", value: "/logs",
-            }, {
-                label: "Users", value: "/user"
+                label: "Log Out", value: "/user/login"
             }
+
+            
         ];
     </script>
 
@@ -31,14 +41,20 @@
     <section atom-type="AtomApplication">
         @if (IsSectionDefined("Header"))
         {
-
             RenderSection("Header", false);
         }
         else {
-            <header style="height:70px; padding:10px;position:relative">
-                <h1 style="display:block; position:absolute;left:10px;top:10px;margin:0">Exception - Server</h1>
+            <header style="height:45px; 
+                           background-color:#ea4335;
+                           position:relative;
+                           color:white;">
+                <h1 style="display:block; position:absolute;left:10px;top:5px;margin:0;">Exception - Server</h1>
 
-                <ul atom-type="AtomLinkBar" atom-items="{links}" style="position:absolute;right:10px;top:10px;"></ul>
+                <ul atom-type="AtomLinkBar"
+                    atom-items="{links}" 
+                    style="position:absolute;right:10px;top:5px; color:white;">
+
+                </ul>
 
             </header>
         }

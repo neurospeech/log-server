@@ -25,18 +25,35 @@ namespace LogServer.Web.Areas.Api.Controllers
         /// <param name="groupID"></param>
         /// <param name="start"></param>
         /// <param name="size"></param>
+        /// <param name="user"></param>
+        /// <param name="ipAddress"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
-        [Route("api/logs/{groupID}")]
+        [Route("api/logs/{groupID}/")]
         [Authorize]
         public async Task<IEnumerable<LogItem>> Get(
-            long groupID, 
-            int start = 0, 
+            long groupID=0,
+            int start = 0,
             int size = 50,
+            string user = null,
+            string ipAddress = null,
             string orderBy = "Time desc"
-            ) {
+            )
+        {
             var q = DB.LogItems.Where(x => x.LogGroupID == groupID);
-            switch (orderBy?.ToLower()) {
+
+            if (!string.IsNullOrWhiteSpace(user))
+            {
+                q = q.Where(x => x.User.Contains(user));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ipAddress))
+            {
+                q = q.Where(x => x.UserIPAddress.Contains(ipAddress));
+            }
+
+            switch (orderBy?.ToLower())
+            {
                 case "time desc":
                     q = q.OrderByDescending(x => x.Time);
                     break;

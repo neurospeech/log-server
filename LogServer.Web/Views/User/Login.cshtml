@@ -3,39 +3,94 @@
     ViewBag.Title = "Login";
 }
 
-<form class="dock-fill"
-      atom-type="AtomForm"
-      atom-post-url="/api/auth"
-      atom-method="PUT"
-      atom-data="{ { 
-        Username: '', 
-        Password: '', 
-        RememberMe: false 
+@section Header{
+
+
+}
+
+<style>
+    .Loginbox {
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 8px;
+        border: 1px solid;
+        border-left: 14px solid;
+        border-color: #0c0c0c;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30em;
+        height: 18em;
+        margin-top: -15em;
+        margin-left: -22em;
+        width: 560px;
+        height: 300px;
+        background-color: rgba(0, 0, 0, 0.13);
+        box-shadow: 5px 5px 5px #888888;
+    }
+    .mainForm {
+        margin: 20%;
+        margin-top:10%;
+        width:70%;
+    }
+    .LoginButton{
+        float: right;
+        background-color: #4285f4;
+        width: 68px;
+        color: white;
+        height: 30px;
+        border-radius: 6px;
+        border-style: none;
+    }
+    .LoginInput {
+        border-radius: 5px;
+        height: 23px;
+        border: #7f7f7f;
+        border-style: solid;
+        border-width: 0.5px;
+    }
+</style>
+    <div class="Loginbox">
+        <div class="mainForm">
+
+            <h1 style="color:#ea4335; font-size:25px;">User Login</h1>
+            <form class="dock-fill"
+                  atom-type="AtomForm"
+                  atom-post-url="/api/auth"
+                  atom-method="PUT"
+                  atom-data="{ {
+        Username: '',
+        Password: '',
+        RememberMe: false
       } }"
-      atom-next="@Model">
+                  atom-next="@Model">
 
-    <div atom-type="AtomFormLayout">
+                <div atom-type="AtomFormLayout">
 
-        <input
-               atom-label="Username:"
-               atom-required="true"
-               atom-value="$[data.Username]"
-               type="text"/>
+                    <input atom-label="Username:"
+                           class="LoginInput"
+                           atom-required="true"
+                           atom-value="$[data.Username]"
+                           type="text" />
 
 
-        <input atom-label="Password:"
-               atom-required="true"
-               atom-value="$[data.Password]"
-               type="password" />
+                    <input atom-label="Password:"
+                           class="LoginInput"
+                           atom-required="true"
+                           atom-value="$[data.Password]"
+                           type="password" />
+                    <span>
+                        <input type="checkbox"
+                               atom-value="$[data.RememberMe]" />
+                        <span style="font-size: 11px;">
+                            Remember Me
+                        </span>
 
-        <input
-               type="checkbox"
-               atom-value="$[data.RememberMe]"
-               />
+                        <button type="submit" class="LoginButton">Login</button>
+                    </span>
+                </div>
 
-        <button type="submit">Login</button>
-
+            </form>
+        </div>
     </div>
-
-</form>
 

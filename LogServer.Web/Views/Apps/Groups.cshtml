@@ -3,44 +3,64 @@
     ViewBag.Title = "Log groups";
 }
 
-<div 
-     class="dock-left log-group-list"
-     atom-type="AtomListBox"
-     atom-allow-select-first="true"
-     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups' )]"
-     atom-value-path="LogGroupID"
-     atom-value="$[appScope.gid]">
-     <div 
-          atom-template="itemTemplate">
-         <h3 atom-text="{$data.Title}"></h3>
-         <span 
-               class="time"
-               atom-text="{AtomDate.smartDate($data.LastUpdate)}"></span>
-         <span 
-               class="status"
-               atom-class="{'status-' + ($data.Status || '').toLowerCase()}"
-               atom-text="{$data.Status}"></span>
-         <span 
-               class="total"
-               atom-text="{'(' + $data.Total + ')'}"></span>
-         <span 
-               class="total-users"
-               atom-text="{$data.TotalUsers}"></span>         
-     </div>
+<script type="text/javascript">
+        ({
+            user: '',
+            ipAddress: '',
+            date: null
+
+    })
+</script>
+
+<div style="margin:0.6%;">
+    <input style="width:236px"
+           atom-value="$[appScope.user]"
+           type="search" placeholder="User ID">
+
+    <button>Search</button>
+    @*<label style="font-size:14px">&nbsp;&nbsp;Search By Date:&nbsp;</label>
+    <div atom-type="AtomDateField"
+         style="height:20px; font-size:13px"
+         atom-value="$[appScope.date]"         
+         atom-start-year="{0}"
+         atom-end-year="{10}">
+    </div>*@
 </div>
 
-<section 
-         class="log-item-list"
+@*atom-type="AtomDateControl"
+         atom-start-year="{-100}"
+         atom-end-year="{0}"*@
+
+<div class="dock-left log-group-list"
+     atom-type="AtomListBox"
+     atom-allow-select-first="true"
+     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups/',{ user: $appScope.user, date: AtomDate.toShortDateString($appScope.date)} )]"
+     atom-value-path="LogGroupID"
+     atom-value="$[appScope.gid]">
+    <div atom-template="itemTemplate">
+        <h3 atom-text="{$data.Title}"></h3>
+        <span class="time"
+              atom-text="{AtomDate.smartDate($data.LastUpdate)}"></span>
+        <span class="status"
+              atom-class="{'status-' + ($data.Status || '').toLowerCase()}"
+              atom-text="{$data.Status}"></span>
+        <span class="total"
+              atom-text="{'(' + $data.Total + ')'}"></span>
+        <span class="total-users"
+              atom-text="{$data.TotalUsers}"></span>
+    </div>
+</div>
+
+<section class="log-item-list"
          atom-type="AtomDockPanel">
 
-    <header 
-            atom-type="AtomListBox"
+    <header atom-type="AtomListBox"
             id="logList"
             atom-allow-select-first="true"
-            atom-items="[AtomPromise.json('/api/logs/' + $appScope.gid )]"
+            atom-items="[AtomPromise.json('/api/logs/' + $appScope.gid ,{user: $appScope.user})]"
             atom-value-path="LogItemID"
             atom-value="$[appScope.lid]">
-        <table atom-presenter="itemsPresenter">
+        <table atom-presenter="itemsPresenter" class="table-class" style="margin:0px; width:100%">
             <thead>
                 <tr>
                     <th>Log</th>
@@ -60,8 +80,7 @@
         </table>
     </header>
 
-    <section 
-             class="log-item-detail"
+    <section class="log-item-detail"
              atom-type="AtomControl"
              atom-data="[$appScope.logList.selectedItem]">
         <h5 atom-text="[$data.Title]"></h5>
@@ -72,9 +91,8 @@
         <h6 atom-text="[$data.Platform]"></h6>
         <h6 atom-text="[$data.PlatformVersion]"></h6>
         <h6 atom-text="[$data.UserAgent]"></h6>
-        <textarea 
-                  readonly="readonly"
-                  atom-value="[$data.Detail]" 
+        <textarea readonly="readonly"
+                  atom-value="[$data.Detail]"
                   style="width:95%;min-height:300px"></textarea>
     </section>
 

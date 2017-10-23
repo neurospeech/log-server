@@ -7,24 +7,56 @@
         ({
             user: '',
             ipAddress: '',
+            error: '',
             date: null
 
     })
 </script>
 
-<div style="margin:0.6%;">
-    <input style="width:236px"
-           atom-value="$[appScope.user]"
-           type="search" placeholder="User ID">
+<div style="margin:0.6%; 
+            width:32%;
+            font-size: small;
+            font-weight: 500;">
+    <table>
+        <tr>
+            <td  style="text-align:right"> User Name/ID :	</td>
+            <td  colspan="2">
+                <input style=" width: 100%;"
+                       atom-value="$[appScope.user]"
+                       type="search" placeholder="User">
+            </td>           
+        </tr>
 
-    <button>Search</button>
-    @*<label style="font-size:14px">&nbsp;&nbsp;Search By Date:&nbsp;</label>
-    <div atom-type="AtomDateField"
-         style="height:20px; font-size:13px"
-         atom-value="$[appScope.date]"         
-         atom-start-year="{0}"
-         atom-end-year="{10}">
-    </div>*@
+        <tr>
+            <td> User IP Address : </td>
+            <td colspan="2">
+                <input style=" width: 100%;"
+                       atom-value="$[appScope.ipAddress]"
+                       type="search" placeholder="User IP Address">
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right"> Error : </td>
+            <td>
+                <input style=" width: 173px;"
+                       atom-value="$[appScope.error]"
+                       type="search" placeholder="Error">
+            </td>
+            <td  style="padding-left:15px">
+                <button>Search</button>
+            </td>
+        </tr>
+    </table>
+
+
+
+        @*<label style="font-size:14px">&nbsp;&nbsp;Search By Date:&nbsp;</label>
+            <div atom-type="AtomDateField"
+                 style="height:20px; font-size:13px"
+                 atom-value="$[appScope.date]"
+                 atom-start-year="{0}"
+                 atom-end-year="{10}">
+            </div>*@
 </div>
 
 @*atom-type="AtomDateControl"
@@ -34,7 +66,7 @@
 <div class="dock-left log-group-list"
      atom-type="AtomListBox"
      atom-allow-select-first="true"
-     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups/',{ user: $appScope.user, date: AtomDate.toShortDateString($appScope.date)} )]"
+     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups/',{ user: $appScope.user, ipAddress: $appScope.ipAddress,error: $appScope.error, date: AtomDate.toShortDateString($appScope.date)} )]"
      atom-value-path="LogGroupID"
      atom-value="$[appScope.gid]">
     <div atom-template="itemTemplate">

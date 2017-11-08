@@ -26,6 +26,8 @@ namespace LogServer.Web.Areas.Api.Controllers
         /// <param name="start"></param>
         /// <param name="size"></param>
         /// <param name="user"></param>
+        /// <param name="url"></param>
+        /// <param name="error"></param>
         /// <param name="ipAddress"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
@@ -37,6 +39,8 @@ namespace LogServer.Web.Areas.Api.Controllers
             int size = 50,
             string user = null,
             string ipAddress = null,
+            string error = null,
+            string url = null,
             string orderBy = "Time desc"
             )
         {
@@ -50,6 +54,16 @@ namespace LogServer.Web.Areas.Api.Controllers
             if (!string.IsNullOrWhiteSpace(ipAddress))
             {
                 q = q.Where(x => x.UserIPAddress.Contains(ipAddress));
+            }
+
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                q = q.Where(x => x.Url.Contains(url));
+            }
+
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                q = q.Where(x => x.Title.Contains(error));
             }
 
             switch (orderBy?.ToLower())

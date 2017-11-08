@@ -8,13 +8,14 @@
             user: '',
             ipAddress: '',
             error: '',
+            url: '',
             date: null
 
     })
 </script>
 
 <div style="margin:0.6%; 
-            width:32%;
+            width:64%;
             font-size: small;
             font-weight: 500;">
     <table>
@@ -24,7 +25,13 @@
                 <input style=" width: 100%;"
                        atom-value="$[appScope.user]"
                        type="search" placeholder="User">
-            </td>           
+            </td>    
+            <td> Url : </td>
+            <td colspan="2">
+                <input style=" width: 100%;"
+                       atom-value="$[appScope.url]"
+                       type="search" placeholder="Url">
+            </td>
         </tr>
 
         <tr>
@@ -66,7 +73,7 @@
 <div class="dock-left log-group-list"
      atom-type="AtomListBox"
      atom-allow-select-first="true"
-     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups/',{ user: $appScope.user, ipAddress: $appScope.ipAddress,error: $appScope.error, date: AtomDate.toShortDateString($appScope.date)} )]"
+     atom-items="[AtomPromise.json('/api/apps/' + $appScope.id + '/groups/',{ user: $appScope.user, ipAddress: $appScope.ipAddress,error: $appScope.error,url: $appScope.url, date: AtomDate.toShortDateString($appScope.date)} )]"
      atom-value-path="LogGroupID"
      atom-value="$[appScope.gid]">
     <div atom-template="itemTemplate">
@@ -89,7 +96,7 @@
     <header atom-type="AtomListBox"
             id="logList"
             atom-allow-select-first="true"
-            atom-items="[AtomPromise.json('/api/logs/' + $appScope.gid ,{user: $appScope.user})]"
+            atom-items="[AtomPromise.json('/api/logs/' + $appScope.gid ,{user: $appScope.user,ipAddress: $appScope.ipAddress,error: $appScope.error,url: $appScope.url})]"
             atom-value-path="LogItemID"
             atom-value="$[appScope.lid]">
         <table atom-presenter="itemsPresenter" class="table-class" style="margin:0px; width:100%">

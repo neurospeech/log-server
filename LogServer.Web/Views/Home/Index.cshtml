@@ -20,7 +20,7 @@
             <tr atom-template="itemTemplate">
                 <td>
                     <a 
-                       atom-href="{Atom.url('/apps/groups/',null,{id: $data.AppID})}"
+                       atom-href="{Atom.url('/apps/groups/',null,{id: $data.AppID,name:$data.Name})}"
                        atom-text="{$data.Name}"></a>
                 </td>
                 <td atom-text="{$data.Platform}"></td>

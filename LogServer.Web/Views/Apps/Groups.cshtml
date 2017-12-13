@@ -14,21 +14,66 @@
     })
 </script>
 
+<style>
+    .search-input {
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding: 4px;
+        width: 175px;
+    }
+
+    .search-button {
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding: 3px;
+        width: 80px;
+    }
+
+    .log-detail-label {
+        float: left;
+        font-size: 9pt;
+        font-weight: 700;
+    }
+
+    .name-label {
+        float: right;
+        background: rgb(20, 91, 134);
+        margin-top: 11px;
+        font-size: 11pt;
+        color: white;
+        padding: 11px;
+        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .error-stack {
+        width: 95%;
+        min-height: 500px;
+        font-family: consolas,monospace;
+        color: #222;
+        padding: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.38);
+        border-radius: 4px;
+    }
+    
+</style>
+
 <div style="margin:0.6%; 
-            width:64%;
+            margin-top: 0.2%;
+            width:99%;
             font-size: small;
             font-weight: 500;">
-    <table>
+    <table style="float:left">
         <tr>
             <td  style="text-align:right"> User Name/ID :	</td>
             <td  colspan="2">
-                <input style=" width: 100%;"
+                <input class="search-input"
                        atom-value="$[appScope.user]"
                        type="search" placeholder="User">
             </td>    
-            <td> Url : </td>
+            <td style="text-align:right;width: 50px;"> Url : </td>
             <td colspan="2">
-                <input style=" width: 100%;"
+                <input class="search-input"
                        atom-value="$[appScope.url]"
                        type="search" placeholder="Url">
             </td>
@@ -37,24 +82,25 @@
         <tr>
             <td> User IP Address : </td>
             <td colspan="2">
-                <input style=" width: 100%;"
+                <input class="search-input"
                        atom-value="$[appScope.ipAddress]"
                        type="search" placeholder="User IP Address">
             </td>
-        </tr>
-        <tr>
-            <td style="text-align:right"> Error : </td>
+            <td style="text-align:right;width: 50px;"> Error : </td>
             <td>
-                <input style=" width: 173px;"
+                <input  class="search-input"
                        atom-value="$[appScope.error]"
                        type="search" placeholder="Error">
             </td>
-            <td  style="padding-left:15px">
-                <button>Search</button>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button class="search-button">Search</button>
             </td>
         </tr>
     </table>
-
+    <label class="name-label" atom-text="['App Name : ' + $appScope.name]"/>
 
 
         @*<label style="font-size:14px">&nbsp;&nbsp;Search By Date:&nbsp;</label>
@@ -90,7 +136,7 @@
     </div>
 </div>
 
-<section class="log-item-list"
+<section class="log-item-list" style="border:none"
          atom-type="AtomDockPanel">
 
     <header atom-type="AtomListBox"
@@ -102,7 +148,6 @@
         <table atom-presenter="itemsPresenter" class="table-class" style="margin:0px; width:100%">
             <thead>
                 <tr>
-                    <th>Log</th>
                     <th>User</th>
                     <th>Time</th>
                     <th>IP Address</th>
@@ -110,10 +155,9 @@
             </thead>
             <tbody atom-presenter="itemsPresenter">
                 <tr atom-template="itemTemplate">
-                    <td atom-text="{$data.LogType}"></td>
-                    <td atom-text="{$data.User}"></td>
+                    <td atom-text="{$data.User || 'N/A'}"></td>
                     <td atom-text="{AtomDate.smartDate($data.Time)}"></td>
-                    <td atom-text="{$data.UserIPAddress}"></td>
+                    <td atom-text="{$data.UserIPAddress || '---'}"></td>
                 </tr>
             </tbody>
         </table>
@@ -121,18 +165,30 @@
 
     <section class="log-item-detail"
              atom-type="AtomControl"
-             atom-data="[$appScope.logList.selectedItem]">
-        <h5 atom-text="[$data.Title]"></h5>
-        <h6 atom-text="[$data.Url]"></h6>
-        <h6 atom-text="[$data.Method]"></h6>
-        <h6 atom-text="[$data.Device]"></h6>
-        <h6 atom-text="[$data.Application]"></h6>
-        <h6 atom-text="[$data.Platform]"></h6>
-        <h6 atom-text="[$data.PlatformVersion]"></h6>
-        <h6 atom-text="[$data.UserAgent]"></h6>
+             atom-data="[$appScope.logList.selectedItem]"
+             style-display="[$appScope.logList.selectedItem != null ? '' : 'none']"
+             >
+        <h5 atom-text="['Title : '+ $data.Title || '---']"></h5>
+        <div  style="font-size: 9pt;padding:5px"><label class="log-detail-label">Url : &nbsp; </label> <label  atom-text="[$data.Url || '---']"></label></div>
+
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">Method : &nbsp; </label> <label atom-text="[$data.Method || '---']"></label></div>
+        
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">Device : &nbsp; </label> <label atom-text="[$data.Device || '---']"></label></div>
+       
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">Application : &nbsp; </label> <label atom-text="[$data.Application || '---']"></label></div>
+       
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">Platform : &nbsp; </label> <label atom-text="[$data.Platform || '---']"></label></div>
+       
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">Platform Version : &nbsp; </label> <label atom-text="[$data.PlatformVersion || '---']"></label></div>
+
+        <div style="font-size: 9pt;padding:5px"><label class="log-detail-label">User Agent : &nbsp; </label> <label atom-text="[$data.UserAgent || '---']"></label></div>
+
         <textarea readonly="readonly"
                   atom-value="[$data.Detail]"
-                  style="width:95%;min-height:300px"></textarea>
+                  class="error-stack"></textarea>
+
+        
+
     </section>
 
 
